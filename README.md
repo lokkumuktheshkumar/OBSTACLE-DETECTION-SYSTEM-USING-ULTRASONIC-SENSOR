@@ -19,6 +19,11 @@ Tinkercad provides a simulation environment where this circuit can be virtually 
 
 
 ## Circuit Diagram:
+<img width="1865" height="836" alt="Screenshot 2025-09-16 141237" src="https://github.com/user-attachments/assets/610a1018-1103-41ca-9c31-fea721b635e1" />
+
+<img width="1098" height="854" alt="Screenshot 2025-09-16 141247" src="https://github.com/user-attachments/assets/6ccefb9a-78e4-420b-8eda-84c723311ed7" />
+
+
  
 ## Procedure: //Modify the procedure based on your circuit
 
@@ -53,9 +58,65 @@ Step 7: Save Your Work
 
 
 ## Code:
+```
+int led = 2;
+int buzzer = 8;
+int pingPin = 13;
+
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(led, OUTPUT);
+  pinMode(buzzer, OUTPUT);
+}
+
+void loop()
+{
+  long duration, cm; // variables to store the duration and distance
+  
+  // ultrasensor state
+  pinMode(pingPin, OUTPUT);
+  digitalWrite(pingPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(pingPin, HIGH);
+  delayMicroseconds(5);
+  digitalWrite(pingPin, LOW);
+	
+  // check input from ultrasensor pingPIN
+  // store the input in duration variable
+  pinMode(pingPin, INPUT);
+  duration = pulseIn(pingPin, HIGH);
+
+  // convert the time into cm
+  cm = duration / 29 / 2;
+
+  // print the result
+  Serial.print(cm);
+  Serial.print("cm");
+  Serial.println();
+  
+  // check if distance drops to 60 cm
+  // buzz the piezzo every 1 sec
+  // blink the light every 1 sec
+  if(cm < 60){
+    digitalWrite(led, HIGH);
+    tone(buzzer, 1000); 
+    delay(1000); // every 1 sec
+    digitalWrite(led, LOW);
+  	noTone(buzzer);        // ... no sound 
+    delay(1000);  
+  }
+
+}
+```
 
 
 ## Output:
+
+
+https://github.com/user-attachments/assets/9f28cfe8-e948-4333-9991-a6cc833236b4
+
+
  
 
 
